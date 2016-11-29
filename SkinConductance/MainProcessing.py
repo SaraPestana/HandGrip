@@ -12,7 +12,7 @@ from scipy.stats import signaltonoise, entropy
 from scipy.signal import decimate
 from matplotlib.font_manager import FontProperties
 from scipy.spatial import distance
-from novainstrumentation.novainstrumentation.code.smooth import smooth
+from novainstrumentation.smooth import smooth
 from IWANTTOFINDNOISE.FeaturesANDClustering.RemoveUnwantedPoints import RemoveUglyDots
 from IWANTTOFINDNOISE.FeaturesANDClustering.WindowFeature import WindowStat, findPeakDistance
 from IWANTTOFINDNOISE.FeaturesANDClustering.FrequencyFeature import SpectralComponents

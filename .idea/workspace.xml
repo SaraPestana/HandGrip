@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="622365b9-0f4d-47df-ba3c-024357ae3f9c" name="Default" comment="first">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SkinConductance/MainProcessing.py" afterPath="$PROJECT_DIR$/SkinConductance/MainProcessing.py" />
     </list>
     <ignored path="SkinConductance.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -48,8 +49,8 @@
       <file leaf-file-name="MainProcessing.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SkinConductance/MainProcessing.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="17" column="42" selection-start-line="17" selection-start-column="42" selection-end-line="17" selection-end-column="42" />
+            <state relative-caret-position="136">
+              <caret line="20" column="61" selection-start-line="20" selection-start-column="61" selection-end-line="20" selection-end-column="61" />
               <folding />
             </state>
           </provider>
@@ -137,8 +138,8 @@
       <list>
         <option value="$PROJECT_DIR$/IWANTTOFINDNOISE/CallMainProcessing.py" />
         <option value="$PROJECT_DIR$/SkinConductance/CallMainProcessing.py" />
-        <option value="$PROJECT_DIR$/SkinConductance/MainProcessing.py" />
         <option value="$PROJECT_DIR$/IWANTTOFINDNOISE/FeaturesANDClustering/FrequencyFeature.py" />
+        <option value="$PROJECT_DIR$/SkinConductance/MainProcessing.py" />
       </list>
     </option>
   </component>
@@ -211,6 +212,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="IWantToFindNoise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SkinConductance" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SkinConductance" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="IWantToFindNoise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FeaturesANDClustering" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -435,7 +454,14 @@
       <option name="project" value="LOCAL" />
       <updated>1480434369372</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="first">
+      <created>1480434456142</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1480434456142</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -714,6 +740,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="53006">
           <caret line="3153" column="0" selection-start-line="3153" selection-start-column="0" selection-end-line="3153" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -784,6 +811,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="53006">
           <caret line="3153" column="0" selection-start-line="3153" selection-start-column="0" selection-end-line="3153" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -805,6 +833,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="53006">
           <caret line="3153" column="0" selection-start-line="3153" selection-start-column="0" selection-end-line="3153" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -920,8 +949,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/SkinConductance/MainProcessing.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="17" column="42" selection-start-line="17" selection-start-column="42" selection-end-line="17" selection-end-column="42" />
+        <state relative-caret-position="136">
+          <caret line="20" column="61" selection-start-line="20" selection-start-column="61" selection-end-line="20" selection-end-column="61" />
           <folding />
         </state>
       </provider>
