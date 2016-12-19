@@ -1,0 +1,77 @@
+tfig1 - 4.387 - 5.419
+
+fig2 - 5.000 - 5.500
+
+fig3 - Tudo ruido
+
+fig4_1 - Tudo ruido
+
+fig4_2 - Tudo ruido
+
+fig4_3 - Tudo ruido
+
+fig5_1 - Segmento limpo 12.7- 14.3
+
+fig5_2 - Tudo ruido
+
+fig5_3 - Tudo ruido
+
+fig5_4 - Segmento limpo 22.3 - 25.5
+
+fig5_5 - Segmento limpo 37.5 - 39.5
+
+fig5_6 - Tudo ruido
+
+fig5_7 - Tudo ruido
+
+fig5_8 - Tudo ruido
+
+fig5_9 - Tudo ruido
+
+fig5_10 - Tudo ruido
+
+fig5_11 - Tudo ruido
+
+fig5_12 - Tudo ruido
+
+fig6_1 - Segmento limpo 0 - 4.29
+
+fig6_2 - Segmento limpo 12.1 - 14.38
+
+fig6_3 - Tudo ruido
+
+fig6_4 - Tudo ruido
+
+fig6_5 - Segmento limpo 39.85 - 45.15
+
+fig6_6 - Segmento ruidoso 44.65 - 48.68
+
+fig7_1 - Segmento ruidoso 8.3 - 12.3
+
+fig7_2 - Segmento ruidoso 16.5 - 18.8
+
+fig7_3 - Segmento ruidoso 22.8 - 26.8
+
+fig7_4 - Segmento ruidoso 27.3 - 30.6
+
+fig7_5 - Segmento ruidoso 38.1 - 46.1
+
+fig7_6 - Segmento ruidoso 84.9 - 87.7
+
+fig7_7 - Segmento ruidoso 107.7 - 110.0
+
+fig7_8 - Segmento ruidoso 127.0 - 135.1
+
+fig7_9 - Segmento ruidoso 118.3 - 120.3
+
+fig7_10 - Tudo ruido
+
+fig7_11 - Segmento ruidoso 149.1 - 152.3
+
+fig8_1 - Segmento ruidoso 7.7 - 9.31
+
+fig8_2 - Segmento ruidoso 16.11 - 16.61
+
+fig8_3 - Segmento ruidoso 23.40 - 29.44
+
+fig8_4 - Segmento limpo - 29.44 - 30.70 / 33.00 - 34.48 / 35.48 -37.00
