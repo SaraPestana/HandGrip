@@ -21,8 +21,9 @@ from IWANTTOFINDNOISE.PerformanceMetric.SensEspAcc import GetResults
 from IWANTTOFINDNOISE.GenerateThings.PlotSaver import plotClusters, plotDistanceMetric, plotLinearData
 from IWANTTOFINDNOISE.GenerateThings.PDFATextGen import get_file_name, pdf_report_creator, pdf_text_closer
 from IWANTTOFINDNOISE.GenerateThings.TextSaver import SaveReport
-from novainstrumentation.novainstrumentation.code.tests.Peak_find import detect_peaks
-from novainstrumentation.novainstrumentation.code import peaks
+from novainstrumentation.PanThomkinsTest import detect_panthomkins_peaks
+from novainstrumentation import peaks
+from novainstrumentation.peakdelta import peakdelta
 import itertools
 from itertools import *
 
@@ -42,7 +43,7 @@ namely noisy pattern or non-noisy pattern.
 ------------------------------------------------------------------------------------------------------------------------
 '''
 #
-def ReportClustering(Signal, fs, clusters, win=50):
+def ReportClustering(Signal, fs, clusters, win = 50):
 
 
     #MainDir = "IWANTOFINDNOISE/TestSignals"
@@ -119,8 +120,8 @@ def ReportClustering(Signal, fs, clusters, win=50):
     smSignal2 = smSignal2/ max(smSignal2)
 
 
-    FeatureNamesG = ["Smooth", "Sum", "Standard Deviation"]
-    FeatureMatrixG = np.array([smSignal, signalSum128, signalSTD]).transpose()
+    FeatureNamesG = ["Smooth", "Standard Deviation", "MF", "Peaks"]
+    FeatureMatrixG = np.array([smSignal, signalSTD, signalMF, signalPKS]).transpose()
 
     plotLinearData(time, FeatureMatrixG, signal, FeatureNamesG)
 
@@ -137,19 +138,17 @@ def ReportClustering(Signal, fs, clusters, win=50):
     #find signal indexes - in this case i will assume that the signal is the majority of the signal
 
 
-    print("Derivative")
-    derivada = np.diff(smooth(osignal, window_len=100))
-    derivada = np.array(derivada) / max(abs(derivada))
-    print(derivada)
-    plt.figure("derivada")
-    plt.plot(time[1:len(time)], derivada, color='r')
-    plt.grid(b=True)
+    #print("Derivative")
+    #derivada = np.diff(smooth(osignal, window_len=100))
+    #derivada = np.array(derivada) / max(abs(derivada))
+    #print(derivada)
+    #plt.figure("derivada")
+    #plt.plot(time[1:len(time)], derivada, color='r')
+    #plt.grid(b=True)
 
 
     print("Creating Predicted Array...")
     Indexiser = []
-
-
     for i in range(0, clusters):
         s = len(y_pred[np.where(y_pred == i)[0]].tolist())
         #s = np.std(signal[np.where(y_pred == i)[0]])
@@ -159,110 +158,156 @@ def ReportClustering(Signal, fs, clusters, win=50):
     SigIndex = Indexiser.index(max(Indexiser))
     Prediction = np.ones(np.size(y_pred.tolist()))
     Prediction[np.where(y_pred == SigIndex)[0]] = 1
-
     print(SigIndex)
     print(Prediction)
 
 
-    print("Indexes of the Signal")
+    print("Segments of the Signal")
+    print("HELLO", SigIndex)
     sig_index = []
-    lock = False
-    a = []
+    array_segment = []
+
     for i in range(0, len(y_pred)):
         if y_pred[i] == SigIndex:
-            a.append(i)
-        else:
-            if len(a) > SigIndex:
-                sig_index.append(a)
-                a = []
-    print("hello", sig_index)
-    print("hello", len(sig_index))
+            array_segment.append(i)
+            sig_index.append(array_segment)
+            '''
+        elif len(array_segment) > SigIndex:
+                sig_index.append(array_segment)
+                array_segment = []
+        if i == len(y_pred)-1:
+            sig_index.append(array_segment)
+            array_segment = []
+            '''
+
 
     print("Plotting Segmentation Signal")
     sig = []
-    t = 10  # number of the points
+    t = 10 # number of the points
+    fs = 500
 
     for c in range(0, len(sig_index)):
         sig = sig_index[c]
-        print(sig)
 
-        print("Signal END")
+        #print("Signal END")
         signal_ff = smooth(osignal[sig] / max(osignal), window_len=100)
-        plt.figure()
+
+
+
+        #print('Peak Amplitude')
+        peak_amplitude = peakdelta(signal_ff, 0.02)
+        #plt.plot(peak_amplitude[0][:, 0], 'ro', ms = 7)
+
+
+        indexes_max = peak_amplitude[0][:, 0]
+        indexes_min = peak_amplitude[1][:, 0]
+
+        values_min = []
+        indexes_peak = []
+
+        for d in range(1, len(indexes_max)):
+            indexes_peak = indexes_max[d]
+            plt.plot(indexes_max[1:], signal_ff[indexes_max[1:]], 'bo', ms=7, label="Peak Amplitude")
+            plt.vlines(x=indexes_peak, ymin=0.6, ymax=1, color='r')
+            #plt.annotate("Peak Amplitude", fontsize = 10, xy = (indexes_peak, signal_ff[indexes_peak]))
+
+
+        # for f in range(0, len(indexes_min)):
+        # values_min = indexes_min[f]
+        plt.plot(indexes_min, signal_ff[indexes_min], 'go', ms = 7, label="Initial time")
+
+        rise_time = indexes_peak - indexes_min
+        values_rise_time = []
+        for r in range(0, len(rise_time)):
+            values_rise_time = rise_time[r]
+            plt.annotate("Rise Time {0}".format(values_rise_time), fontsize=10, xy=(values_rise_time + 3000,  signal_ff[values_rise_time + 5500]))
+
+
+
+
         plt.plot(signal_ff)
-        plt.title('Segmentation signal')
+        plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=2, mode="expand", borderaxespad=0.)
+        plt.legend(['Peak_Amplitude'])
 
 
-        win_width = t * fs
-        mean_sig = np.zeros(len(signal_ff) / win_width)
-        numstps = int((len(signal_ff) - win_width))  # Number of windows
-        for d in range(0, len(signal_ff) - win_width):
-            print("S1")
-            s1 = np.array(signal_ff[d:d + win_width])
-            print(s1)
-
-            print("Maximum value")
-            max_value = max(signal_ff[:2800])
-            print(max_value)
+        plt.show()
 
 
-            print("Max index")
-            max_index = np.argmax(signal_ff[:2800])
-            print(max_index)
-
-            print("T_derivative")
-            t_derivative = [max_index - 1300, max_index]
-            print(t_derivative)
-
-            print("Value x")
-            x = np.array(derivada[t_derivative[0]:t_derivative[1]])
-            print(x)
-
-            print("Final value")
-            final_index = max_index - 1300 + np.where(x > 0.1)[0][0]
-            print(final_index)
-            initial_time = 10
-
-            print("Latency time")
-            latency_time = final_index - initial_time
-            plt.plot(final_index, signal_ff[final_index], 'co', lw=3, ms=7)
-            plt.annotate("Latency time {0}".format(latency_time), fontsize = 10, xy = (final_index + 0.02, signal_ff[final_index] + 0.02))
-
-            print("Initial time")
-
-            print(initial_time)
-            #plt.plot(time[initial_time], signal_ff[initial_time] / max(osignal), 'r*', lw=3, ms=10)
-            #plt.annotate("Initial time", fontsize=10, xy=(time[initial_time], signal_ff[initial_time] / max(osignal)), arrowprops=dict(facecolor='black', shrink=0.5), horizontalalignment='right', verticalalignment='top')
-
-            print("Latency time")
-
-            print(latency_time)
-            #plt.annotate("Latency time", fontsize = 12, xy = (t[final_index], s[final_index] / max(s)), xytext = (t[initial_time] - 10.0, s[initial_time] / max(s)), arrowprops=dict(arrowstyle = "->", connectionstyle = 'arc3, rad=0.5', alpha = 2), horizontalalignment = 'left', verticalalignment = 'top')
-            #plt.annotate("Latency time", fontsize=10, xy=(time[final_index], signal_ff[final_index] / max(osignal)), arrowprops=dict(facecolor='black', shrink=0.5), horizontalalignment='left', verticalalignment='bottom')
 
 
-            #print("Amplitude")
-            #amplitude = max(signal_ff[:2800]) / max(osignal)
-            #print(amplitude)
-            print("Maximum value")
-            amplitude1 = max(signal_ff[:2800])
-            print(amplitude1)
-            plt.plot(max_index, amplitude1, 'ro', ms = 7)
-
-            plt.annotate("Maximum value{0}".format(round(amplitude1, 3)), fontsize=10, xy=(max_index + 0.02, amplitude1 + 0.02))
-
-            print("Rise timne")
-            rise_time = max_index + 1300 - latency_time
-            print(rise_time)
-            plt.plot(rise_time, signal_ff[rise_time], 'bo', lw=3, ms=7)
-            plt.annotate("Rise time{0}".format(rise_time), fontsize=10, xy=(rise_time + 0.02, signal_ff[rise_time] + 0.02))
 
 
-            print("Recovery half time")
-            half_recovery_time = np.where(signal_ff[:2800] > amplitude1 * 0.5)[0][-1]
-            plt.plot(half_recovery_time, signal_ff[half_recovery_time], 'go', ms=7)
-            print(half_recovery_time)
-            plt.annotate("Recovery half time{0}".format(half_recovery_time), fontsize=10, xy=(half_recovery_time + 0.02, signal_ff[half_recovery_time] + 0.02))
+
+
+
+
+
+
+            #print("Initial Time")
+            #initial_time = indexes_min
+            #print(initial_time)
+            #plt.plot(initial_time, signal_ff[initial_time], 'co', ms = 7)
+            #plt.annotate("Initial time{0}".format(initial_time), fontsize = 10, xy = (initial_time, signal_ff[initial_time]))
+
+
+            #indexes_max_r = indexes_max[1:len(indexes_max)]
+
+            #print("Rise time")
+            #rise_time = indexes_max_r - indexes_min
+            #print(rise_time)
+
+
+            #for f in range(0, len(indexes_max)):
+                #value_max = indexes_max[f]
+                #plt.plot(indexes_max, signal_ff[indexes_max], 'bo', ms = 7)
+                #plt.vlines(x=indexes_max, ymin=0.6, ymax=1, color='r')
+
+            #plt.plot(rise_time, signal_ff[rise_time], 'bo', lw=3, ms=7)
+            #plt.annotate("Rise time{0}".format(rise_time), fontsize=10, xy=(rise_time + 0.01, signal_ff[rise_time] + 0.01))
+
+            #print("Y_max")
+            #y_max = signal_ff[indexes_peak]
+            #print(y_max)
+
+            #print("Y_min")
+            #y_min = signal_ff[initial_time[0]]
+            #print(y_min)
+
+            #print("value_y")
+            #value_y = (y_max - y_min)*0.5
+            #print(half_amplitude)
+
+            #print("Time amplitude")
+            #time_amplitude = np.where(signal_ff == value_y)[0][-1]
+            #print(time_amplitude)
+
+            #plt.plot(half_amplitude, signal_ff[half_amplitude], 'co', ms=7)
+            #plt.annotate("Half amplitude{0}".format(half_amplitude), fontsize=10, xy=(half_amplitude - 0.5, signal_ff[half_amplitude - 0.5]))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

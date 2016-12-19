@@ -5,9 +5,9 @@ import ast
 import seaborn 
 import matplotlib.pyplot as plt
 from scipy.io import loadmat
-from MainProcessing import ReportClustering
-import novainstrumentation.novainstrumentation
-from novainstrumentation.novainstrumentation.code.smooth import smooth
+from SkinConductance.MainProcessing import ReportClustering
+from novainstrumentation import *
+from novainstrumentation.smooth import smooth
 
 
 
@@ -63,12 +63,18 @@ def read_header(source_file, print_header = False):
 
 	return head_dic
 
-file = r'C:\Users\Sara Pestana\Desktop\IWANTTOFINDNOISE\Test\opensignals_000780B383A6_2016-11-16_14-10-33.txt'
+file = r'C:\Users\Sara Pestana\Desktop\IWANTTOFINDNOISE\Test\opensignals_000780B383A6_2016-12-05_11-42-12.txt'
+#analisado o sinal opensignals_000780B383A6_2016-12-05_10-46-48.txt com win = 36 (boa classificação do sinal)
+#analisando o sinal openssignals_000780B38A6_2016-12-05_11-48-55.txt com win = 40 ou win = 50 (obtenho uma boa classificação do sinal)
+#evento opensignals_00780B38A6_2016-12-05_11-22-50.txt
+
+#voltar a fazer a análise do sinal 2016-12-05_11-42-12 porque nao me deu todos os segmentos do sinal
+#voltar a fazer a análise para o signal opensignals_00780B38A6_2016-12-05_11-48-55.txt
 
 signal = np.loadtxt(file)
 
 print("PLOTTING SIGNAL")
-plt.plot(signal[:, 3])
+plt.plot(smooth(signal[:, 3]))
 
 
 
